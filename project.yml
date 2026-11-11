@@ -1,0 +1,59 @@
+name: AllPlus
+options:
+  bundleIdPrefix: com.study
+  deploymentTarget:
+    iOS: '16.0'
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    TARGETED_DEVICE_FAMILY: '1,2'
+    MARKETING_VERSION: '1.0.0'
+    CURRENT_PROJECT_VERSION: '1'
+packages:
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk.git
+    exactVersion: 11.15.0
+  GoogleSignIn:
+    url: https://github.com/google/GoogleSignIn-iOS
+    exactVersion: 8.0.0
+targets:
+  AllPlus:
+    type: application
+    platform: iOS
+    sources: [AllPlus]
+    info:
+      path: AllPlus/Info.plist
+      properties:
+        CFBundleDisplayName: All+ 單字本
+        UILaunchScreen: {}
+        NSCameraUsageDescription: 拍攝雜誌單字與片語，辨識成你的學習清單。
+        NSPhotoLibraryUsageDescription: 選取雜誌照片並辨識單字。
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.study.allplus
+        GENERATE_INFOPLIST_FILE: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    dependencies:
+      - package: Firebase
+        product: FirebaseAuth
+      - package: Firebase
+        product: FirebaseFirestore
+      - package: GoogleSignIn
+        product: GoogleSignIn
+  AllPlusTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [AllPlusTests]
+    dependencies:
+      - target: AllPlus
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  AllPlus:
+    build:
+      targets:
+        AllPlus: all
+    test:
+      targets: [AllPlusTests]

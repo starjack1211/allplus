@@ -4,7 +4,9 @@
 
 ## 目前狀態
 
-已建立原生 App 原始碼與雲端編譯流程，尚未在此 Windows 電腦完成 Xcode 編譯或 iPhone 實測。這個資料夾不是 IPA；要先讓 GitHub Actions 的測試與編譯通過，才能取得交給 iLoader 的檔案。
+已在 GitHub 雲端 Mac 完成 Xcode 編譯，9 項原生測試全部通過，並產生 `AllPlus-unsigned.ipa`，交由 iLoader 簽署安裝。適用 iOS 16 以上。安裝檔已驗證為 arm64 實體 iPhone 版本，並核對相機權限、Firebase Bundle ID 與 Google 登入回呼。
+
+[成功的編譯與測試紀錄](https://github.com/starjack1211/allplus/actions/runs/43038667777)。原始碼版本：`946ac4161e8853280386a41d0a6d2e194f05bfed`。尚未在使用者的實體 iPhone 測試相機辨識、Google 登入及跨裝置備份，辨識準確率仍待實拍驗證。
 
 使用者提供的雜誌照片只作版面參考，沒有放入 App，也不會預載照片中的單字。
 
@@ -65,9 +67,9 @@ open AllPlus.xcodeproj
 
 ## 驗證
 
-本機可執行 `python scripts/check_project.py` 檢查 Firebase 設定、OAuth 回呼、資源與工作流程。本機已做 Swift 語法樹檢查，但這不等於 Xcode 型別檢查或編譯通過。
+本機可執行 `python scripts/check_project.py` 檢查 Firebase 設定、OAuth 回呼、資源與工作流程。本機 3 項專案檢查與 10 份 Swift 語法檢查通過；雲端 Xcode 編譯和原生測試也已通過。
 
-`AllPlusTests` 包含詞條解析、跨行中文、片語／句型邊界、參考字彙去重、括號省略、拼字正規化、選擇題唯一性、資料編碼往返，以及合成陰影影像測試。這些測試須在 GitHub macOS 工作流程執行後才有實際結果。
+`AllPlusTests` 包含詞條解析、跨行中文、片語／句型邊界、參考字彙去重、括號省略、拼字正規化、選擇題唯一性、資料編碼往返，以及合成陰影影像測試。2026-11-11 的雲端執行結果：9 項測試通過，0 項失敗。合成陰影測試驗證紙張亮度均衡與深色文字保留，並不代表真實照片辨識率。
 
 第一輪實機驗收應涵蓋：相機權限、兩欄／單欄照片、陰影預覽、中文與詞性校對、重新開啟保留資料、排序、各測驗模式、Google 登入、雲端備份與第二支手機取回。
 
